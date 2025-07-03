@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import EventCard from '@/components/EventCard.vue'
 import EventCategory from '@/components/EventCategory.vue'
+import EventService from '@/services/EventService'
 import type { Event } from '@/types'
-import axios from 'axios'
 import { onMounted, ref } from 'vue'
-const events = ref<Event[]>(null)
+const events = ref<Event[]>()
 onMounted(() => {
-  axios
-    .get('https://my-json-server.typicode.com/PhoneMyatKo-cmu/331-db-repo/db')
+  EventService.getEvents()
     .then((response) => {
-      console.log(response.data)
+      events.value = response.data
     })
     .catch((error) => {
       console.error('There was an error!', error)
