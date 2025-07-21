@@ -17,15 +17,21 @@ defineProps<{
 </script>
 
 <template>
-  <div class="event-class">
-    <div class="event-card">
-      <h2>{{ event.title }}</h2>
-      <span>@{{ event.time }} on {{ event.date }}</span>
+  <RouterLink class="event-link" :to="{ name: 'event-detail-view', params: { id: event.id } }">
+    <div class="event-class">
+      <div class="event-card">
+        <h2>{{ event.title }}</h2>
+        <span>@{{ event.time }} on {{ event.date }}</span>
+      </div>
     </div>
-  </div>
+  </RouterLink>
 </template>
 
 <style scoped>
+.event-link {
+  text-decoration: none;
+  color: #2c3e50;
+}
 .event-card {
   padding: 20px;
   width: 250px;
