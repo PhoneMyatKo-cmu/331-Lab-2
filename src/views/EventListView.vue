@@ -3,8 +3,13 @@ import EventCard from '@/components/EventCard.vue'
 import EventCategory from '@/components/EventCategory.vue'
 import EventService from '@/services/EventService'
 import type { Event } from '@/types'
-import { computed, onMounted, ref } from 'vue'
-const events = ref<Event[]>()
+import { computed, onMounted, ref, watchEffect } from 'vue'
+const events = ref<Event[] | null>()
+const totalEvents = ref(0)
+const hasNextPage = computed(() => {
+  const totalPages = Math.ceil(totalEvents.value / 2)
+  return page.value < totalPages
+})
 const props = defineProps({
   page: {
     type: Number,
@@ -12,14 +17,18 @@ const props = defineProps({
   },
 })
 const page = computed(() => props.page)
+const perPage = ref(2)
 onMounted(() => {
-  EventService.getEvents(2, page.value)
-    .then((response) => {
-      events.value = response.data
-    })
-    .catch((error) => {
-      console.error('There was an error!', error)
-    })
+  watchEffect(() => {
+    EventService.getEvents(perPage.value, page.value)
+      .then((response) => {
+        events.value = response.data
+        totalEvents.value = response.headers['x-total-count']
+      })
+      .catch((error) => {
+        console.error('There was an error!', error)
+      })
+  })
 })
 </script>
 
@@ -31,15 +40,26 @@ onMounted(() => {
     <EventCard v-for="event in events" :key="event.id" :event="event" />
   </div>
 
-  <RouterLink
-    :to="{ name: 'event-list-view', query: { page: page - 1 } }"
-    rel="prev"
-    v-if="page != 1"
-    >Prev Page</RouterLink
-  >
-  <RouterLink :to="{ name: 'event-list-view', query: { page: page + 1 } }" rel="next"
-    >Next Page</RouterLink
-  >
+  <div class="pagination">
+    <RouterLink
+      id="page-prev"
+      :to="{ name: 'event-list-view', query: { page: page - 1 } }"
+      rel="prev"
+      v-if="page != 1"
+      >&#60; Prev Page</RouterLink
+    >
+    <RouterLink
+      id="page-next"
+      :to="{ name: 'event-list-view', query: { page: page + 1 } }"
+      rel="next"
+      v-if="hasNextPage"
+      >Next Page &#62;</RouterLink
+    >
+  </div>
+  <div class="per-page-control">
+    <label for="page_limit">Page Limit</label
+    ><input type="number" name="page_limit" id="" v-model="perPage" min="0" :max="totalEvents" />
+  </div>
   <div class="event-cats">
     <EventCategory v-for="event in events" :key="event.id" :event="event" />
   </div>
@@ -50,6 +70,23 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.pagination {
+  display: flex;
+  width: 290px;
+  margin: auto;
+}
+.pagination a {
+  flex: 1;
+  text-decoration: none;
+  color: #2c3e50;
+}
+.page-prev {
+  text-align: left;
+}
+.page-next {
+  text-align: right;
 }
 .event-cats {
   display: flex;
