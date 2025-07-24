@@ -1,3 +1,5 @@
+import EventService from '@/services/EventService'
+import { useEventStore } from '@/stores/event'
 import AboutView from '@/views/AboutView.vue'
 import EventDetailView from '@/views/event/DetailView.vue'
 import EventEditView from '@/views/event/EditView.vue'
@@ -24,6 +26,27 @@ const router = createRouter({
       name: 'event-layout-view',
       component: EventLayoutView,
       props: true,
+      beforeEnter: (to) => {
+        //API call
+        const id = parseInt(to.params.id as string)
+        const eventStore = useEventStore()
+        return EventService.getEvent(id)
+          .then((response) => {
+            eventStore.setEvent(response.data)
+          })
+          .catch((error) => {
+            if (error.response && error.response.status === 404) {
+              router.push({
+                name: '404-resource-view',
+                params: { resource: 'event' },
+              })
+            } else {
+              router.push({
+                name: 'network-error-view',
+              })
+            }
+          })
+      },
       children: [
         {
           path: '',
