@@ -7,7 +7,7 @@ import { computed, onMounted, ref, watchEffect } from 'vue'
 const events = ref<Event[] | null>()
 const totalEvents = ref(0)
 const hasNextPage = computed(() => {
-  const totalPages = Math.ceil(totalEvents.value / 3)
+  const totalPages = Math.ceil(totalEvents.value / 2)
   return page.value < totalPages
 })
 const props = defineProps({
@@ -40,9 +40,10 @@ onMounted(() => {
     <EventCard v-for="event in events" :key="event.id" :event="event" />
   </div>
 
-  <div class="pagination">
+  <div class="flex w-[290px] m-auto">
     <RouterLink
       id="page-prev"
+      class="text-left"
       :to="{ name: 'event-list-view', query: { page: page - 1 } }"
       rel="prev"
       v-if="page != 1"
@@ -50,6 +51,7 @@ onMounted(() => {
     >
     <RouterLink
       id="page-next"
+      class="text-right"
       :to="{ name: 'event-list-view', query: { page: page + 1 } }"
       rel="next"
       v-if="hasNextPage"
@@ -60,7 +62,7 @@ onMounted(() => {
     <label for="page_limit">Page Limit</label
     ><input type="number" name="page_limit" id="" v-model="perPage" min="0" :max="totalEvents" />
   </div>
-  <div class="event-cats">
+  <div class="flex flex-col items-end">
     <EventCategory v-for="event in events" :key="event.id" :event="event" />
   </div>
 </template>
@@ -72,25 +74,25 @@ onMounted(() => {
   align-items: center;
 } */
 
-.pagination {
+/* .pagination {
   display: flex;
   width: 290px;
   margin: auto;
-}
-.pagination a {
+} */
+/* .pagination a {
   flex: 1;
   text-decoration: none;
   color: #2c3e50;
-}
-.page-prev {
+} */
+/* .page-prev {
   text-align: left;
 }
 .page-next {
   text-align: right;
-}
-.event-cats {
+} */
+/* .event-cats {
   display: flex;
   flex-direction: column;
   align-items: end;
-}
+} */
 </style>
