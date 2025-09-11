@@ -1,4 +1,5 @@
 import router from '@/router'
+import type { Organizer } from '@/types'
 import axios from 'axios'
 const apiClient = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL,
@@ -18,13 +19,13 @@ apiClient.interceptors.response.use(
   },
 )
 export default {
-  getEvents(perPage: number, page: number) {
-    return apiClient.get('/events?_limit=' + perPage + '&_page=' + page)
+  getOrganizers(perPage: number, page: number) {
+    return apiClient.get('/organizers?_limit=' + perPage + '&_page=' + page)
   },
-  getEvent(id: number) {
-    return apiClient.get('/events/' + id)
+  getOrganizer(id: number) {
+    return apiClient.get('/organizers/' + id)
   },
-  saveEvent(event: Event) {
-    return apiClient.post('/events', event)
+  saveOrganizer(organizer: Organizer) {
+    return apiClient.post('/organizers', organizer)
   },
 }

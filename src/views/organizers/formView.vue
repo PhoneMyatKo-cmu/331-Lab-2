@@ -1,26 +1,22 @@
-<script setup lang="ts">
-import EventService from '@/services/EventService'
+<script lang="ts" setup>
+import OrganizerService from '@/services/OrganizerService'
 import { useMessageStore } from '@/stores/message'
-import type { Event } from '@/types'
+import type { Organizer } from '@/types'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-const event = ref<Event>({
-  title: '',
-  category: '',
-  description: '',
-  date: '',
-  time: '',
-  location: '',
-  petsAllowed: false,
-  organizer: '',
+
+const organizer = ref<Organizer>({
+  name: '',
+  address: '',
 })
 const router = useRouter()
 const messageStore = useMessageStore()
-function saveEvent() {
-  EventService.saveEvent(event.value)
+
+function saveOrganizer() {
+  OrganizerService.saveOrganizer(organizer.value)
     .then((response) => {
-      router.push({ name: 'event-detail-view', params: { id: response.data.id } })
-      messageStore.updateMessage('Event "' + response.data.title + '" has been registered')
+      router.push({ name: 'organizer-detail-view', params: { id: response.data.id } })
+      messageStore.updateMessage('Organizer "' + response.data.name + '" has been registered')
       setTimeout(() => {
         messageStore.resetMessage()
       }, 3000)
@@ -28,26 +24,21 @@ function saveEvent() {
     .catch(() => {
       router.push({ name: 'network-error-view' })
     })
+  console.log('Saving organizer:', organizer.value)
 }
 </script>
 
 <template>
   <div class="w-[80%] m-auto">
-    <h1>Create an event</h1>
-    <form @submit.prevent="saveEvent">
-      <label for="">Category</label>
-      <input type="text" v-model="event.category" placeholder="Category" />
-      <h3>Name and Describe your event</h3>
-      <label for="">Title</label>
-      <input type="text" v-model="event.title" placeholder="Title" class="field" />
-      <label for="">Description</label>
-      <textarea v-model="event.description" placeholder="Description" class="field"></textarea>
-      <h3>Where</h3>
-      <label for="">Location</label>
-      <input type="text" v-model="event.location" placeholder="Location" class="field" />
+    <h1>Create an organizer</h1>
+    <form @submit.prevent="saveOrganizer">
+      <label for="">Name</label>
+      <input type="text" v-model="organizer.name" placeholder="Name" class="field" />
+      <label for="">Address</label>
+      <textarea v-model="organizer.address" placeholder="Address" class="field"></textarea>
       <button class="button">Submit</button>
     </form>
-    <pre>{{ event }}</pre>
+    <pre>{{ organizer }}</pre>
   </div>
 </template>
 

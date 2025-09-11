@@ -1,5 +1,5 @@
 export interface Event {
-  id: number
+  id?: number
   category: string
   title: string
   description: string
@@ -21,10 +21,20 @@ export interface Student {
   description: string
 }
 
+export interface Organizer {
+  id?: number
+  name: string
+  address: string
+}
+
 export interface MessageState {
   message: string
 }
 
 export interface EventState {
   event: Event | null
+}
+
+export interface OrganizerState {
+  organizer: Organizer | null
 }
