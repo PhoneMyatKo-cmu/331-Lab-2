@@ -6,6 +6,7 @@ export default {
     extend: {
       boxShadow: {
         sp: '0 3px 12px 0 rgba(0,0,0,0.2)',
+        bp: '0 10px 20px 0 red',
       },
       fontFamily: {
         sans: ['Avenir', 'Helvetica', 'Arial', 'sans-serif'],

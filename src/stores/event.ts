@@ -7,4 +7,7 @@ export const useEventStore = defineStore('event', {
       this.event = event
     },
   },
+  getters: {
+    eventType: (eventState) => eventState.event?.location,
+  },
 })

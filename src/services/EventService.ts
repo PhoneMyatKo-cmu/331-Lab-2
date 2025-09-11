@@ -1,7 +1,7 @@
 import router from '@/router'
 import axios from 'axios'
 const apiClient = axios.create({
-  baseURL: 'https://my-json-server.typicode.com/PhoneMyatKo-cmu/331-db-repo',
+  baseURL: 'http://localhost:8080',
   withCredentials: false,
   headers: {
     Accept: 'application/json',

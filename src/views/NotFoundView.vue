@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const props = withDefaults(defineProps<{ resource: string }>(), { resource: 'page' })
+const resource = props.resource
 </script>
 <template>
   <h1>Oops</h1>
