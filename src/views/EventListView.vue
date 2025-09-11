@@ -8,7 +8,7 @@ const events = ref<Event[] | null>()
 const totalEvents = ref(0)
 const hasNextPage = computed(() => {
   const totalPages = Math.ceil(totalEvents.value / 2)
-  return page.value < totalPages
+  return page.value < totalPages - 1
 })
 const props = defineProps({
   page: {
@@ -46,7 +46,7 @@ onMounted(() => {
       class="text-left"
       :to="{ name: 'event-list-view', query: { page: page - 1 } }"
       rel="prev"
-      v-if="page != 1"
+      v-if="page != 0"
       >&#60; Prev Page</RouterLink
     >
     <RouterLink
