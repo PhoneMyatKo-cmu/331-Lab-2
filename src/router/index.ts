@@ -3,6 +3,7 @@ import { useEventStore } from '@/stores/event'
 import AboutView from '@/views/AboutView.vue'
 import EventDetailView from '@/views/event/DetailView.vue'
 import EventEditView from '@/views/event/EditView.vue'
+import AddEventView from '@/views/event/FormView.vue'
 import EventLayoutView from '@/views/event/LayoutView.vue'
 import EventRegisterView from '@/views/event/RegisterView.vue'
 import EventListView from '@/views/EventListView.vue'
@@ -80,6 +81,11 @@ const router = createRouter({
       path: '/student',
       name: 'student',
       component: StudentView,
+    },
+    {
+      path: '/add-event',
+      name: 'add-event',
+      component: AddEventView,
     },
     {
       path: '/404/:resource',
