@@ -11,7 +11,7 @@ const event = ref<Event>({
   date: '',
   time: '',
   location: '',
-  petsAllowed: false,
+  petAllowed: false,
   organizer: '',
 })
 const router = useRouter()
