@@ -27,4 +27,7 @@ export default {
   saveEvent(event: Event) {
     return apiClient.post('/events', event)
   },
+  getEventsByKeyword(keyword: string, perPage: number, page: number): Promise<AxioResponse<Event>> {
+    return apiClient.get<Event>('events?title=' + keyword + '&_limit=' + perPage + '&_page=' + page)
+  },
 }
