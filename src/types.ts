@@ -26,6 +26,7 @@ export interface Organizer {
   id?: number
   name: string
   address: string
+  imageUrl: string
 }
 
 export interface MessageState {

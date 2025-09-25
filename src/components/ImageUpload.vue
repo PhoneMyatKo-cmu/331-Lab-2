@@ -3,15 +3,23 @@ import { ref } from 'vue'
 import Uploader from 'vue-media-upload'
 
 interface Props {
-  modelValue?: string[]
+  modelValue?: string[] | string
+  multiple?: boolean
 }
 const props = withDefaults(defineProps<Props>(), {
   modelValue: () => [],
+  multiple: true,
 })
-const convertStringToMedia = (str: string[]) => {
-  return str.map((element: string) => {
-    return { name: element }
-  })
+const convertStringToMedia = (str: string[] | string) => {
+  if (Array.isArray(str)) {
+    return str.map((element: string) => {
+      return { name: element }
+    })
+  } else if (typeof str === 'string' && str.length > 0) {
+    return [{ name: str }]
+  } else {
+    return []
+  }
 }
 
 const emit = defineEmits(['update:modelValue'])
@@ -27,10 +35,19 @@ const media = ref(convertStringToMedia(props.modelValue))
 const uploadUrl = ref(import.meta.env.VITE_UPLOAD_URL)
 const onChanged = (files: any) => {
   console.log('On change Uploader:', files)
-  emit('update:modelValue', convertMediaToString(files))
+  if (props.multiple) {
+    emit('update:modelValue', convertMediaToString(files))
+  } else {
+    emit('update:modelValue', files[0].name || '')
+  }
 }
 </script>
 
 <template>
-  <Uploader :server="uploadUrl" @change="onChanged" :media="media" field></Uploader>
+  <Uploader
+    :server="uploadUrl"
+    @change="onChanged"
+    :media="media"
+    :max="!props.multiple ? 1 : null"
+  ></Uploader>
 </template>

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import ImageUpload from '@/components/ImageUpload.vue'
 import OrganizerService from '@/services/OrganizerService'
 import { useMessageStore } from '@/stores/message'
 import type { Organizer } from '@/types'
@@ -8,6 +9,7 @@ import { useRouter } from 'vue-router'
 const organizer = ref<Organizer>({
   name: '',
   address: '',
+  imageUrl: '',
 })
 const router = useRouter()
 const messageStore = useMessageStore()
@@ -36,6 +38,8 @@ function saveOrganizer() {
       <input type="text" v-model="organizer.name" placeholder="Name" class="field" />
       <label for="">Address</label>
       <textarea v-model="organizer.address" placeholder="Address" class="field"></textarea>
+      <h3>The image of the Organizer</h3>
+      <ImageUpload v-model:model-value="organizer.imageUrl" :multiple="false" />
       <button class="button">Submit</button>
     </form>
     <pre>{{ organizer }}</pre>
