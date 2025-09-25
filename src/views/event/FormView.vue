@@ -48,7 +48,7 @@ function saveEvent() {
       <label for="">Location</label>
       <input type="text" v-model="event.location" placeholder="Location" class="field" />
       <h3>The image of the Event</h3>
-      <ImageUpload v-model="event.images" />
+      <ImageUpload v-model:model-value="event.images" />
       <button class="button">Submit</button>
     </form>
     <pre>{{ event }}</pre>
