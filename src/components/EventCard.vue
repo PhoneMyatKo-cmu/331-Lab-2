@@ -24,6 +24,8 @@ defineProps<{
       >
         <h2>{{ event.title }}</h2>
         <span>{{ event.category }} @ {{ event.location }}</span>
+        <h2>by</h2>
+        <h5>{{ event.organizer.name }}</h5>
       </div>
     </div>
   </RouterLink>
