@@ -1,60 +1,17 @@
 <script setup lang="ts">
-import BaseInput from '@/components/BaseInput.vue'
-import ImageUpload from '@/components/ImageUpload.vue'
-import EventService from '@/services/EventService'
-import { useMessageStore } from '@/stores/message'
-import type { Event } from '@/types'
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
-const event = ref<Event>({
-  title: '',
-  category: '',
-  description: '',
-  date: '',
-  time: '',
-  location: '',
-  petAllowed: false,
-  organizer: {
-    id: 1,
-    name: '',
-  },
-  images: [],
-})
-const router = useRouter()
-const messageStore = useMessageStore()
-function saveEvent() {
-  EventService.saveEvent(event.value)
-    .then((response) => {
-      router.push({ name: 'event-detail-view', params: { id: response.data.id } })
-      messageStore.updateMessage('Event "' + response.data.title + '" has been registered')
-      setTimeout(() => {
-        messageStore.resetMessage()
-      }, 3000)
-    })
-    .catch(() => {
-      router.push({ name: 'network-error-view' })
-    })
+const modelValue = defineModel()
+
+interface BaseInputProps {
+  label: string
 }
+const props = withDefaults(defineProps<BaseInputProps>(), { label: '' })
 </script>
 
 <template>
-  <div class="w-[80%] m-auto">
-    <h1>Create an event</h1>
-    <form @submit.prevent="saveEvent">
-      <BaseInput label="Category" v-model="event.category" type="text" class="field" />
-      <h3>Name and Describe your event</h3>
-      <BaseInput label="Title" v-model="event.title" type="text" />
-      <BaseInput label="Description" v-model="event.description" type="text" />
-
-      <h3>Where</h3>
-      <BaseInput label="Location" v-model="event.location" type="text" />
-
-      <h3>The image of the Event</h3>
-      <ImageUpload v-model:model-value="event.images" />
-      <button class="button">Submit</button>
-    </form>
-    <pre>{{ event }}</pre>
-  </div>
+  <label v-if="label">
+    {{ props.label }}
+  </label>
+  <input class="mb-6" v-bind="$attrs" v-model="modelValue" :placeholder="label" />
 </template>
 
 <style scoped>
