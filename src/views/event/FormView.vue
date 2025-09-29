@@ -2,9 +2,10 @@
 import BaseInput from '@/components/BaseInput.vue'
 import ImageUpload from '@/components/ImageUpload.vue'
 import EventService from '@/services/EventService'
+import OrganizerService from '@/services/OrganizerService'
 import { useMessageStore } from '@/stores/message'
-import type { Event } from '@/types'
-import { ref } from 'vue'
+import { Organizer, type Event } from '@/types'
+import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 const event = ref<Event>({
   title: '',
@@ -35,6 +36,16 @@ function saveEvent() {
       router.push({ name: 'network-error-view' })
     })
 }
+const organizers = ref<Organizer[]>([])
+onMounted(() => {
+  OrganizerService.getOrganizerss()
+    .then((response) => {
+      organizers.value = response.data
+    })
+    .catch(() => {
+      router.push({ name: 'network-error-view' })
+    })
+})
 </script>
 
 <template>
@@ -48,6 +59,18 @@ function saveEvent() {
 
       <h3>Where</h3>
       <BaseInput label="Location" v-model="event.location" type="text" />
+
+      <h3>Who is your organizer?</h3>
+      <select v-model="event.organizer.id">
+        <option
+          v-for="organizer in organizers"
+          :value="organizer.id"
+          :key="organizer.id"
+          :selected="event.organizer.id === organizer.id"
+        >
+          {{ organizer.name }}
+        </option>
+      </select>
 
       <h3>The image of the Event</h3>
       <ImageUpload v-model:model-value="event.images" />
