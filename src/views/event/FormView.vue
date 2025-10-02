@@ -5,7 +5,7 @@ import ImageUpload from '@/components/ImageUpload.vue'
 import EventService from '@/services/EventService'
 import OrganizerService from '@/services/OrganizerService'
 import { useMessageStore } from '@/stores/message'
-import { Organizer, type Event } from '@/types'
+import type { Event, Organizer } from '@/types'
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 const event = ref<Event>({
