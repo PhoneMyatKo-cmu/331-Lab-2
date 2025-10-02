@@ -12,7 +12,7 @@ const { message } = storeToRefs(store)
   <SpeedInsights />
   <div class="text-center font-sans text-gray-700 antialias">
     <header>
-      <div id="flashMessage" class="animate-fade" v-if="message && message.includes('registered')">
+      <div id="flashMessage" class="animate-fade" v-if="message">
         <h4>{{ message }}</h4>
       </div>
       <h1>Deploy with vercel</h1>

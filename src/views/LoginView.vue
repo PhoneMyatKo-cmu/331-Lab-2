@@ -2,6 +2,7 @@
 import InputText from '@/components/InputText.vue'
 import router from '@/router'
 import { useAuthStore } from '@/stores/auth'
+import { useMessageStore } from '@/stores/message'
 import { useField, useForm } from 'vee-validate'
 import * as yup from 'yup'
 const validationSchema = yup.object({
@@ -18,6 +19,7 @@ const { errors, handleSubmit } = useForm({
 const { value: email } = useField<string>('email')
 const { value: password } = useField<string>('password')
 const authStore = useAuthStore()
+const messageStore = useMessageStore()
 const onSubmit = handleSubmit((value) => {
   authStore
     .login(value.email, value.password)
@@ -27,6 +29,8 @@ const onSubmit = handleSubmit((value) => {
     })
     .catch((error) => {
       console.log('Error', error)
+      messageStore.updateMessage('Could not login!')
+      setTimeout(() => messageStore.resetMessage(), 3000)
     })
 })
 </script>
