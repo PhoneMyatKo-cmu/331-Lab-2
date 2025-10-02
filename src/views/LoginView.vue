@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import InputText from '@/components/InputText.vue'
+import router from '@/router'
 import { useAuthStore } from '@/stores/auth'
 import { useField, useForm } from 'vee-validate'
 import * as yup from 'yup'
@@ -22,6 +23,7 @@ const onSubmit = handleSubmit((value) => {
     .login(value.email, value.password)
     .then(() => {
       console.log('Login Success')
+      router.push({ name: 'event-list-view' })
     })
     .catch((error) => {
       console.log('Error', error)

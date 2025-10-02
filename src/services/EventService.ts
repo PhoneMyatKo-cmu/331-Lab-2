@@ -1,13 +1,5 @@
 import router from '@/router'
-import axios from 'axios'
-const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL,
-  withCredentials: false,
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-})
+import apiClient from './AxiosClient'
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {

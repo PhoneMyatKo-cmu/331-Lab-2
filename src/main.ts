@@ -4,6 +4,7 @@ import './assets/style.css'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
 
+import '@/services/AxiosInterceptorSetup'
 import { inject } from '@vercel/analytics'
 import 'nprogress/nprogress.css'
 import App from './App.vue'
