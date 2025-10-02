@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { useAuthStore } from '@/stores/auth'
+import { computed, ref } from 'vue'
 import Uploader from 'vue-media-upload'
 
 interface Props {
@@ -41,6 +42,10 @@ const onChanged = (files: any) => {
     emit('update:modelValue', files[0].name || '')
   }
 }
+const authStore = useAuthStore()
+const authorizeHeader = computed(() => {
+  return { authorization: authStore.authorizationHeader }
+})
 </script>
 
 <template>
@@ -48,6 +53,7 @@ const onChanged = (files: any) => {
     :server="uploadUrl"
     @change="onChanged"
     :media="media"
+    :headers="authorizeHeader"
     :max="!props.multiple ? 1 : null"
   ></Uploader>
 </template>
