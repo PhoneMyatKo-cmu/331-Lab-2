@@ -9,6 +9,7 @@ import AddEventView from '@/views/event/FormView.vue'
 import EventLayoutView from '@/views/event/LayoutView.vue'
 import EventRegisterView from '@/views/event/RegisterView.vue'
 import EventListView from '@/views/EventListView.vue'
+import LoginView from '@/views/LoginView.vue'
 import NetworkErrorView from '@/views/NetworkErrorView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import DetailView from '@/views/organizers/detailView.vue'
@@ -120,6 +121,11 @@ const router = createRouter({
       path: '/add-organizer',
       name: 'add-organizer',
       component: FormView,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: LoginView,
     },
     {
       path: '/404/:resource',
