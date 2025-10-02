@@ -14,6 +14,7 @@ import NetworkErrorView from '@/views/NetworkErrorView.vue'
 import NotFoundView from '@/views/NotFoundView.vue'
 import DetailView from '@/views/organizers/detailView.vue'
 import FormView from '@/views/organizers/formView.vue'
+import ListView from '@/views/organizers/ListView.vue'
 import StudentView from '@/views/StudentView.vue'
 import nProgress from 'nprogress'
 import { createRouter, createWebHistory } from 'vue-router'
@@ -91,6 +92,11 @@ const router = createRouter({
       path: '/add-event',
       name: 'add-event',
       component: AddEventView,
+    },
+    {
+      path: '/organizers',
+      name: 'organizer-list-view',
+      component: ListView,
     },
     {
       path: '/organizers/:id',
