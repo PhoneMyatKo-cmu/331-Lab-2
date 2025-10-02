@@ -10,6 +10,7 @@ const organizer = ref<Organizer>({
   name: '',
   address: '',
   imageUrl: '',
+  roles: [],
 })
 const router = useRouter()
 const messageStore = useMessageStore()

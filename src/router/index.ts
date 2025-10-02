@@ -16,6 +16,7 @@ import DetailView from '@/views/organizers/detailView.vue'
 import FormView from '@/views/organizers/formView.vue'
 import ListView from '@/views/organizers/ListView.vue'
 import StudentView from '@/views/StudentView.vue'
+import RegisterView from '@/views/User/RegisterView.vue'
 import nProgress from 'nprogress'
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -132,6 +133,11 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView,
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component: RegisterView,
     },
     {
       path: '/404/:resource',

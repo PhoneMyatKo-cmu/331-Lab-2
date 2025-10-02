@@ -30,6 +30,12 @@ export interface Organizer {
   roles: string[]
 }
 
+export interface User {
+  firstname: string
+  lastname: string
+  email: string
+  password: string
+}
 export interface MessageState {
   message: string
 }
